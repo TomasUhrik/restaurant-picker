@@ -1,8 +1,7 @@
 "use server";
 
 import { RANDOM_PLACE_TAG } from "@/consts/cache-tags";
-
-const COGENT_LABS_LL = "35.6647034,139.7376358";
+import { COGENT_LABS_LL } from "@/consts/map";
 
 const NO_STORE = "no-store";
 
