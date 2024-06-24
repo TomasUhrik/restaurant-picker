@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { revalidateRandomPlace } from "./actions/revalidate-random-place";
 import { BackgroundMapLayout } from "./components/background-map-layout/background-map-layout";
-import { Place4S } from "@/data-access/fetch-random-place";
+import { Place4SDetailed } from "@/data-access/fetch-random-place";
 
-export function Home({ initialData }: { initialData: Place4S }) {
+export function Home({ initialData }: { initialData: Place4SDetailed }) {
   return (
     <BackgroundMapLayout
       venueCoords={{
@@ -16,8 +16,9 @@ export function Home({ initialData }: { initialData: Place4S }) {
       <div
         style={{
           backgroundColor: "white",
-          width: "100px",
-          height: "100px",
+          minWidth: "100px",
+          minHeight: "100px",
+          padding: "20px",
           margin: "20px",
         }}
       >
@@ -25,6 +26,17 @@ export function Home({ initialData }: { initialData: Place4S }) {
         <p>{initialData?.name}</p>
         <Link href="/about">About</Link>
         <button onClick={() => revalidateRandomPlace()}>Retry</button>
+        {initialData.photos.map((photo) => {
+          return (
+            <img
+              key={photo.id}
+              src={`${photo.prefix}original${photo.suffix}`}
+              alt={initialData.name}
+              width={photo.width * 0.1}
+              height={photo.height * 0.1}
+            />
+          );
+        })}
       </div>
     </BackgroundMapLayout>
   );
