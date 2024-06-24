@@ -32,7 +32,13 @@ export async function fetchRandomPlace() {
   )
     .then((response) => response.json())
     .then((data) => data.results)
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.log("error happende in fetchRandomPlace:");
+      console.error(err);
+      throw err;
+    });
+
+  console.log(result);
 
   const randomIndex = Math.floor(Math.random() * result.length);
   const selected = result && result[randomIndex];
