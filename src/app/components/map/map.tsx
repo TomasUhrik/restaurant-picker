@@ -2,18 +2,40 @@
 
 import { COGENT_LABS_LATITUDE, COGENT_LABS_LONGITUDE } from "@/consts/map";
 import GoogleMapReact from "google-map-react";
-
-const AnyReactComponent = ({
-  text,
-}: {
-  text: string;
-  lat: number;
-  lng: number;
-}) => <h1>{text}</h1>;
+import { useEffect, useState } from "react";
 
 export type VenueCoords = { lat: number; lng: number };
 
+const renderPathToVenue = (
+  directionsRenderer: any,
+  directionsService: any,
+  maps: any,
+  venueCoords?: VenueCoords
+) => {
+  if (!venueCoords) {
+    directionsRenderer.setDirections();
+    return;
+  }
+
+  directionsService.route(
+    {
+      origin: new maps.LatLng(COGENT_LABS_LATITUDE, COGENT_LABS_LONGITUDE),
+      destination: new maps.LatLng(venueCoords.lat, venueCoords.lng),
+      travelMode: maps.TravelMode.WALKING,
+    },
+    (result: any) => {
+      directionsRenderer.setDirections(result);
+    }
+  );
+};
+
 export const Map = ({ venueCoords }: { venueCoords?: VenueCoords }) => {
+  const [mapControllers, setMapControllers] = useState({
+    directionsRenderer: undefined,
+    directionsService: undefined,
+    maps: undefined,
+  });
+
   const defaultProps = {
     center: {
       lat: COGENT_LABS_LATITUDE,
@@ -22,8 +44,24 @@ export const Map = ({ venueCoords }: { venueCoords?: VenueCoords }) => {
     zoom: 17,
   };
 
+  useEffect(() => {
+    if (
+      !mapControllers.directionsService ||
+      !mapControllers.directionsRenderer ||
+      !mapControllers.maps
+    ) {
+      return;
+    }
+
+    renderPathToVenue(
+      mapControllers.directionsRenderer,
+      mapControllers.directionsService,
+      mapControllers.maps,
+      venueCoords
+    );
+  }, [venueCoords, mapControllers]);
+
   return (
-    // Important! Always set the container height explicitly
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{
@@ -31,15 +69,19 @@ export const Map = ({ venueCoords }: { venueCoords?: VenueCoords }) => {
         }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
-      >
-        {venueCoords && (
-          <AnyReactComponent
-            lat={venueCoords.lat}
-            lng={venueCoords.lng}
-            text="Cogent labs office"
-          />
-        )}
-      </GoogleMapReact>
+        yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({ map, maps }) => {
+          const newDirectionsService = new maps.DirectionsService();
+          const newDirectionsRenderer = new maps.DirectionsRenderer();
+          newDirectionsRenderer.setMap(map);
+
+          setMapControllers({
+            directionsRenderer: newDirectionsRenderer,
+            directionsService: newDirectionsService,
+            maps,
+          });
+        }}
+      />
     </div>
   );
 };
