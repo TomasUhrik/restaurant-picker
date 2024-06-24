@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { revalidateRandomPlace } from "./actions/revalidate-random-place";
-import { Map } from "./components/map/map";
+import { BackgroundMapLayout } from "./components/background-map-layout/background-map-layout";
 
 export function Home({ initialData }: { initialData: any }) {
   return (
@@ -11,7 +11,18 @@ export function Home({ initialData }: { initialData: any }) {
       <p>{initialData?.name}</p>
       <Link href="/about">About</Link>
       <button onClick={() => revalidateRandomPlace()}>Retry</button>
-      <Map />
+      <BackgroundMapLayout>
+        <div
+          style={{
+            backgroundColor: "white",
+            width: "100px",
+            height: "100px",
+            margin: "20px",
+          }}
+        >
+          <h1>Hello world</h1>
+        </div>
+      </BackgroundMapLayout>
     </div>
   );
 }
