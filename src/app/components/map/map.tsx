@@ -3,9 +3,17 @@
 import { COGENT_LABS_LATITUDE, COGENT_LABS_LONGITUDE } from "@/consts/map";
 import GoogleMapReact from "google-map-react";
 
-const AnyReactComponent = ({ text }: { text: string }) => <div>{text}</div>;
+const AnyReactComponent = ({
+  text,
+}: {
+  text: string;
+  lat: number;
+  lng: number;
+}) => <h1>{text}</h1>;
 
-export const Map = () => {
+export type VenueCoords = { lat: number; lng: number };
+
+export const Map = ({ venueCoords }: { venueCoords?: VenueCoords }) => {
   const defaultProps = {
     center: {
       lat: COGENT_LABS_LATITUDE,
@@ -24,7 +32,13 @@ export const Map = () => {
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
       >
-        {/* <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" /> */}
+        {venueCoords && (
+          <AnyReactComponent
+            lat={venueCoords.lat}
+            lng={venueCoords.lng}
+            text="Cogent labs office"
+          />
+        )}
       </GoogleMapReact>
     </div>
   );
