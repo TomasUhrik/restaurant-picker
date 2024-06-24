@@ -1,13 +1,18 @@
 "use server";
 
 import { RANDOM_PLACE_TAG } from "@/consts/cache-tags";
-
-const COGENT_LABS_LL = "35.6647034,139.7376358";
+import { COGENT_LABS_LL } from "@/consts/map";
 
 const NO_STORE = "no-store";
 
-type Place4S = {
+export type Place4S = {
   name: string;
+  geocodes: {
+    main: {
+      latitude: number;
+      longitude: number;
+    };
+  };
 };
 
 export async function fetchRandomPlace() {
@@ -38,10 +43,10 @@ export async function fetchRandomPlace() {
       throw err;
     });
 
-  console.log(result);
-
   const randomIndex = Math.floor(Math.random() * result.length);
   const selected = result && result[randomIndex];
+
+  console.log("Selected:", selected);
 
   return selected;
 }
