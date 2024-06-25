@@ -1,7 +1,8 @@
 "use client";
 
 import { Place4SDetailed } from "@/data-access/fetch-random-place";
-import { useState } from "react";
+import { useDebounce } from "@/utils/useDebounce";
+import { useCallback, useEffect, useState } from "react";
 
 export const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -9,38 +10,52 @@ export const Search = () => {
     []
   );
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error>();
+  const debouncedSearchValue = useDebounce(searchValue, 500);
 
-  // @TODO: Throttle
-  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
-    setLoading(true);
+  const handleFetchPlaces = useCallback(async (value: string) => {
+    if (!value) {
+      setSearchResults([]);
+      return;
+    }
 
-    const results: Array<Place4SDetailed> = await fetch(
-      "/api?query=" + e.target.value
-    )
-      .then((response) => response.json())
-      .then((data) => data.data);
+    try {
+      setLoading(true);
+      const results: Array<Place4SDetailed> = await fetch("/api?query=" + value)
+        .then((response) => response.json())
+        .then((data) => data.data);
 
-    console.log(results);
+      setSearchResults(results);
+    } catch (error) {
+      setError(new Error("Failed to fetch places"));
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-    setSearchResults(results);
-    setLoading(false);
-  };
+  useEffect(() => {
+    handleFetchPlaces(debouncedSearchValue);
+  }, [debouncedSearchValue, handleFetchPlaces]);
 
   return (
     <div>
       <input
         type="text"
         value={searchValue}
-        onChange={handleSearch}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchValue(e.target.value);
+        }}
         placeholder="Search..."
       />
       {loading && <p>Loading...</p>}
-      <ul>
-        {searchResults.map((result) => (
-          <li key={result.fsq_id}>{result.name}</li>
-        ))}
-      </ul>
+      {!error && (
+        <ul>
+          {searchResults.map((result) => (
+            <li key={result.fsq_id}>{result.name}</li>
+          ))}
+        </ul>
+      )}
+      {error && <p>{error.message}</p>}
     </div>
   );
 };

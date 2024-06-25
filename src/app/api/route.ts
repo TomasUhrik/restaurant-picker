@@ -3,7 +3,7 @@ import { Place4SDetailed } from "@/data-access/fetch-random-place";
 
 const NO_STORE = "no-store";
 
-export async function GET(request: Request, response: Response) {
+export async function GET(request: Request) {
   const fields = ["fsq_id", "description", "photos", "geocodes", "name"];
 
   const { searchParams } = new URL(request.url);
@@ -30,7 +30,6 @@ export async function GET(request: Request, response: Response) {
     .then((response) => response.json())
     .then((data) => data.results)
     .catch((err) => {
-      console.log("error happened in fetchRandomPlace:");
       console.error(err);
       throw err;
     });
