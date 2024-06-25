@@ -4,6 +4,7 @@ import Link from "next/link";
 import { revalidateRandomPlace } from "./actions/revalidate-random-place";
 import { BackgroundMapLayout } from "./components/background-map-layout/background-map-layout";
 import { Place4SDetailed } from "@/data-access/fetch-random-place";
+import { Search } from "./components/search/search";
 
 export function Home({ initialData }: { initialData: Place4SDetailed }) {
   return (
@@ -22,6 +23,7 @@ export function Home({ initialData }: { initialData: Place4SDetailed }) {
           margin: "20px",
         }}
       >
+        <Search />
         <h1>Place</h1>
         <p>{initialData?.name}</p>
         <Link href="/about">About</Link>
