@@ -4,6 +4,7 @@ import Link from "next/link";
 import { revalidateRandomPlace } from "./actions/revalidate-random-place";
 import { BackgroundMapLayout } from "./components/background-map-layout/background-map-layout";
 import { Place4SDetailed } from "@/data-access/fetch-random-place";
+import { SidebarContent } from "./components/sidebar-content/sidebar-content";
 
 export function Home({ initialData }: { initialData: Place4SDetailed }) {
   return (
@@ -22,21 +23,23 @@ export function Home({ initialData }: { initialData: Place4SDetailed }) {
           margin: "20px",
         }}
       >
-        <h1>Place</h1>
-        <p>{initialData?.name}</p>
-        <Link href="/about">About</Link>
-        <button onClick={() => revalidateRandomPlace()}>Retry</button>
-        {initialData.photos.map((photo) => {
-          return (
-            <img
-              key={photo.id}
-              src={`${photo.prefix}original${photo.suffix}`}
-              alt={initialData.name}
-              width={photo.width * 0.1}
-              height={photo.height * 0.1}
-            />
-          );
-        })}
+        <SidebarContent>
+          <h1>Place</h1>
+          <p>{initialData?.name}</p>
+          <Link href="/about">About</Link>
+          <button onClick={() => revalidateRandomPlace()}>Retry</button>
+          {initialData.photos.map((photo) => {
+            return (
+              <img
+                key={photo.id}
+                src={`${photo.prefix}original${photo.suffix}`}
+                alt={initialData.name}
+                width={photo.width * 0.1}
+                height={photo.height * 0.1}
+              />
+            );
+          })}
+        </SidebarContent>
       </div>
     </BackgroundMapLayout>
   );
