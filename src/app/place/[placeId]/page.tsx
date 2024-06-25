@@ -1,4 +1,4 @@
-import { BackgroundMapLayout } from "@/app/components/background-map-layout/background-map-layout";
+import { MapRenderer } from "@/app/components/map-renderer/map-renderer";
 import { SidebarContent } from "@/app/components/sidebar-content/sidebar-content";
 import { fetchPlace } from "@/data-access/fetch-place";
 import Link from "next/link";
@@ -10,32 +10,24 @@ export default async function Place({
 }: {
   params: { [label: string]: string };
 }) {
-  console.log("SEARCH PARAMS:", params);
   const place = await fetchPlace(params.placeId);
 
-  console.log("place:", place);
   return (
-    <BackgroundMapLayout
-      venueCoords={{
-        lat: place.geocodes.main.latitude,
-        lng: place.geocodes.main.longitude,
+    <div
+      style={{
+        backgroundColor: "white",
+        minWidth: "100px",
+        minHeight: "100px",
+        padding: "20px",
+        margin: "20px",
       }}
     >
-      <div
-        style={{
-          backgroundColor: "white",
-          minWidth: "100px",
-          minHeight: "100px",
-          padding: "20px",
-          margin: "20px",
-        }}
-      >
-        <SidebarContent>
-          <h1>Place</h1>
-          <p>{place.name}</p>
-          <Link href="/about">About</Link>
-          {/* <button onClick={() => revalidateRandomPlace()}>Retry</button> */}
-          {/* {place.photos.map((photo) => {
+      <SidebarContent>
+        <h1>Place</h1>
+        <p>{place.name}</p>
+        <Link href="/about">About</Link>
+        {/* <button onClick={() => revalidateRandomPlace()}>Retry</button> */}
+        {/* {place.photos.map((photo) => {
             return (
               <img
                 key={photo.id}
@@ -46,8 +38,14 @@ export default async function Place({
               />
             );
           })} */}
-        </SidebarContent>
-      </div>
-    </BackgroundMapLayout>
+      </SidebarContent>
+
+      <MapRenderer
+        venueCoords={{
+          lat: place.geocodes.main.latitude,
+          lng: place.geocodes.main.longitude,
+        }}
+      />
+    </div>
   );
 }
