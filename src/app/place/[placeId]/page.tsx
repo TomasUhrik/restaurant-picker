@@ -23,21 +23,25 @@ export default async function Place({
       }}
     >
       <SidebarContent>
-        <h1>Place</h1>
-        <p>{place.name}</p>
-        <Link href="/about">About</Link>
+        <h1>{place.name}</h1>
         {/* <button onClick={() => revalidateRandomPlace()}>Retry</button> */}
-        {/* {place.photos.map((photo) => {
+        <div style={{ display: "flex" }}>
+          {place.photos.map((photo) => {
             return (
               <img
                 key={photo.id}
                 src={`${photo.prefix}original${photo.suffix}`}
-                alt={initialData.name}
+                alt={place.name}
                 width={photo.width * 0.1}
                 height={photo.height * 0.1}
               />
             );
-          })} */}
+          })}
+        </div>
+
+        <div style={{ padding: "10px 0" }}>
+          <p>{place.description}</p>
+        </div>
       </SidebarContent>
 
       <PopulateMapStore

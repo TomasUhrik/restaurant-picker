@@ -1,51 +1,6 @@
 "use server";
 
-import { RANDOM_PLACE_TAG } from "@/consts/cache-tags";
-import { COGENT_LABS_LL } from "@/consts/map";
-
 const NO_STORE = "no-store";
-
-export type Place4S = {
-  fsq_id: string;
-  name: string;
-  geocodes: {
-    main: {
-      latitude: number;
-      longitude: number;
-    };
-  };
-};
-
-export async function fetchPlace(fsqId: string) {
-  const queryParams = new URLSearchParams({
-    ll: COGENT_LABS_LL,
-    radius: "1000",
-  }).toString();
-
-  console.log("fsqId:", fsqId);
-
-  // @TODO: Cache?
-  const result: Place4S = await fetch(
-    `https://api.foursquare.com/v3/places/${fsqId}`,
-    {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: process.env.FOUR_SQUARE_API_KEY || "",
-      },
-    }
-  )
-    .then((response) => response.json())
-    .catch((err) => {
-      console.log("error happende in fetchRandomPlace:");
-      console.error(err);
-      throw err;
-    });
-
-  console.log("Result:", result);
-
-  return result;
-}
 
 type Photo4S = {
   id: string;
@@ -56,7 +11,7 @@ type Photo4S = {
   height: number;
 };
 
-export type Place4SDetailed = {
+export type Place4S = {
   fsq_id: string;
   name: string;
   geocodes: {
@@ -66,44 +21,46 @@ export type Place4SDetailed = {
     };
   };
   photos: Array<Photo4S>;
+  description: string;
+  features?: {
+    food_and_drink?: Array<string>;
+  };
+  menu?: string;
 };
 
-// @TODO: Save tokens by fetching only for one
-export const fetchRandomPlaceDetailed = async () => {
-  const fields = ["fsq_id", "description", "photos", "geocodes", "name"];
+export async function fetchPlace(fsqId: string) {
+  const fields = [
+    "fsq_id",
+    "description",
+    "photos",
+    "geocodes",
+    "name",
+    "features",
+    "menu",
+  ];
 
   const queryParams = new URLSearchParams({
-    ll: COGENT_LABS_LL,
-    radius: "1000",
     fields: fields.join(","),
   }).toString();
 
-  const result: Array<Place4SDetailed> = await fetch(
-    "https://api.foursquare.com/v3/places/search?" + queryParams,
+  // @TODO: Cache?
+  const result: Place4S = await fetch(
+    `https://api.foursquare.com/v3/places/${fsqId}?` + queryParams,
     {
       method: "GET",
       headers: {
         accept: "application/json",
         Authorization: process.env.FOUR_SQUARE_API_KEY || "",
       },
-      cache: NO_STORE,
-      next: {
-        tags: [RANDOM_PLACE_TAG],
-      },
     }
   )
     .then((response) => response.json())
-    .then((data) => data.results)
     .catch((err) => {
-      console.log("error happende in fetchRandomPlace:");
       console.error(err);
       throw err;
     });
 
-  const randomIndex = Math.floor(Math.random() * result.length);
-  const selected = result && result[randomIndex];
+  console.log("result:", result);
 
-  console.log("Selected:", selected);
-
-  return selected;
-};
+  return result;
+}

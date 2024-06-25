@@ -6,8 +6,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 export const Search = ({
+  isSearching,
   setIsSearching,
 }: {
+  isSearching: boolean;
   setIsSearching: (value: boolean) => void;
 }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -55,17 +57,23 @@ export const Search = ({
           setSearchValue(e.target.value);
         }}
         placeholder="Search..."
+        style={{
+          border: "1px solid black",
+          margin: "10px 0",
+        }}
       />
       {loading && <p>Loading...</p>}
-      <button
-        onClick={() => {
-          setIsSearching(false);
-          setSearchValue("");
-          setSearchResults([]);
-        }}
-      >
-        Stop Searching
-      </button>
+      {isSearching && (
+        <button
+          onClick={() => {
+            setIsSearching(false);
+            setSearchValue("");
+            setSearchResults([]);
+          }}
+        >
+          Back
+        </button>
+      )}
       {!error && (
         <ul>
           {searchResults.map((result) => (

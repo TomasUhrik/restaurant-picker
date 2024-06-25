@@ -8,7 +8,7 @@ export const SidebarContent = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <Search setIsSearching={setIsSearching} />
+      <Search setIsSearching={setIsSearching} isSearching={isSearching} />
 
       {!isSearching && children}
     </>
