@@ -4,7 +4,11 @@ import { Place4SDetailed } from "@/data-access/fetch-random-place";
 import { useDebounce } from "@/utils/useDebounce";
 import { useCallback, useEffect, useState } from "react";
 
-export const Search = () => {
+export const Search = ({
+  setIsSearching,
+}: {
+  setIsSearching: (value: boolean) => void;
+}) => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<Place4SDetailed>>(
     []
@@ -43,12 +47,24 @@ export const Search = () => {
       <input
         type="text"
         value={searchValue}
+        onFocus={() => {
+          setIsSearching(true);
+        }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setSearchValue(e.target.value);
         }}
         placeholder="Search..."
       />
       {loading && <p>Loading...</p>}
+      <button
+        onClick={() => {
+          setIsSearching(false);
+          setSearchValue("");
+          setSearchResults([]);
+        }}
+      >
+        Stop Searching
+      </button>
       {!error && (
         <ul>
           {searchResults.map((result) => (
