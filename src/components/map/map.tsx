@@ -1,10 +1,10 @@
 "use client";
 
 import { COGENT_LABS_LATITUDE, COGENT_LABS_LONGITUDE } from "@/consts/map";
+import { VenueCoords } from "@/consts/types";
+import { useMapStore } from "@/stores/map-store/map-store";
 import GoogleMapReact from "google-map-react";
 import { useEffect, useState } from "react";
-
-export type VenueCoords = { lat: number; lng: number };
 
 const renderPathToVenue = (
   directionsRenderer: any,
@@ -29,7 +29,9 @@ const renderPathToVenue = (
   );
 };
 
-export const Map = ({ venueCoords }: { venueCoords?: VenueCoords }) => {
+export const Map = () => {
+  const { venueCoords } = useMapStore();
+
   const [mapControllers, setMapControllers] = useState({
     directionsRenderer: undefined,
     directionsService: undefined,

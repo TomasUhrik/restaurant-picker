@@ -17,7 +17,8 @@
     "google-map-react": "^2.2.1",
     "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.1.0",

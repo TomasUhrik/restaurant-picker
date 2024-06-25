@@ -1,11 +1,9 @@
-import { Map, VenueCoords } from "../map/map";
+import { LazyMap } from "../../../components/map/map-lazy";
 
 export const BackgroundMapLayout = ({
   children,
-  venueCoords,
 }: {
   children: React.ReactNode;
-  venueCoords?: VenueCoords;
 }) => {
   return (
     <div>
@@ -19,7 +17,7 @@ export const BackgroundMapLayout = ({
           zIndex: 1,
         }}
       >
-        <Map venueCoords={venueCoords} />
+        <LazyMap />
       </div>
 
       <div

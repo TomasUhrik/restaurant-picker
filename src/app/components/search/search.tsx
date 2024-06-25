@@ -2,6 +2,7 @@
 
 import { Place4SDetailed } from "@/data-access/fetch-random-place";
 import { useDebounce } from "@/utils/useDebounce";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 export const Search = ({
@@ -68,7 +69,9 @@ export const Search = ({
       {!error && (
         <ul>
           {searchResults.map((result) => (
-            <li key={result.fsq_id}>{result.name}</li>
+            <li key={result.fsq_id}>
+              <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
+            </li>
           ))}
         </ul>
       )}
