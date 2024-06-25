@@ -1,4 +1,4 @@
-import { MapRenderer } from "@/app/components/map-renderer/map-renderer";
+import { PopulateMapStore } from "@/app/components/populate-map-store/populate-map-store";
 import { SidebarContent } from "@/app/components/sidebar-content/sidebar-content";
 import { fetchPlace } from "@/data-access/fetch-place";
 import Link from "next/link";
@@ -40,7 +40,7 @@ export default async function Place({
           })} */}
       </SidebarContent>
 
-      <MapRenderer
+      <PopulateMapStore
         venueCoords={{
           lat: place.geocodes.main.latitude,
           lng: place.geocodes.main.longitude,
