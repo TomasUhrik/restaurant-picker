@@ -21,6 +21,7 @@ export const Search = () => {
 
     try {
       setLoading(true);
+      setError(undefined);
       const results: Array<Place4SDetailed> = await fetch("/api?query=" + value)
         .then((response) => response.json())
         .then((data) => data.data);
