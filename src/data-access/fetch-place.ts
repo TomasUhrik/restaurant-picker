@@ -16,38 +16,35 @@ export type Place4S = {
   };
 };
 
-export async function fetchRandomPlace() {
+export async function fetchPlace(fsqId: string) {
   const queryParams = new URLSearchParams({
     ll: COGENT_LABS_LL,
     radius: "1000",
   }).toString();
 
-  const result: Array<Place4S> = await fetch(
-    "https://api.foursquare.com/v3/places/search?" + queryParams,
+  console.log("fsqId:", fsqId);
+
+  // @TODO: Cache?
+  const result: Place4S = await fetch(
+    `https://api.foursquare.com/v3/places/${fsqId}`,
     {
       method: "GET",
       headers: {
         accept: "application/json",
         Authorization: process.env.FOUR_SQUARE_API_KEY || "",
       },
-      cache: NO_STORE,
-      next: {
-        tags: [RANDOM_PLACE_TAG],
-      },
     }
   )
     .then((response) => response.json())
-    .then((data) => data.results)
     .catch((err) => {
       console.log("error happende in fetchRandomPlace:");
       console.error(err);
       throw err;
     });
 
-  const randomIndex = Math.floor(Math.random() * result.length);
-  const selected = result && result[randomIndex];
+  console.log("Result:", result);
 
-  return selected;
+  return result;
 }
 
 type Photo4S = {
@@ -73,7 +70,7 @@ export type Place4SDetailed = {
 
 // @TODO: Save tokens by fetching only for one
 export const fetchRandomPlaceDetailed = async () => {
-  const fields = ["fsq_id"];
+  const fields = ["fsq_id", "description", "photos", "geocodes", "name"];
 
   const queryParams = new URLSearchParams({
     ll: COGENT_LABS_LL,
@@ -105,6 +102,8 @@ export const fetchRandomPlaceDetailed = async () => {
 
   const randomIndex = Math.floor(Math.random() * result.length);
   const selected = result && result[randomIndex];
+
+  console.log("Selected:", selected);
 
   return selected;
 };
