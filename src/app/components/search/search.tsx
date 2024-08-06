@@ -4,6 +4,7 @@ import { Place4SDetailed } from "@/data-access/fetch-random-place";
 import { useDebounce } from "@/utils/useDebounce";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { Input } from "../input";
 
 export const Search = ({
   isSearching,
@@ -47,43 +48,46 @@ export const Search = ({
 
   return (
     <div>
-      <input
-        type="text"
-        value={searchValue}
-        onFocus={() => {
-          setIsSearching(true);
-        }}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setSearchValue(e.target.value);
-        }}
-        placeholder="Search..."
-        style={{
-          border: "1px solid black",
-          margin: "10px 0",
-        }}
-      />
-      {loading && <p>Loading...</p>}
-      {isSearching && (
-        <button
-          onClick={() => {
-            setIsSearching(false);
-            setSearchValue("");
-            setSearchResults([]);
+      <div>
+        <Input
+          type="text"
+          value={searchValue}
+          onFocus={() => {
+            setIsSearching(true);
           }}
-        >
-          Back
-        </button>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setSearchValue(e.target.value);
+          }}
+          placeholder="Search..."
+        />
+      </div>
+
+      {isSearching && (
+        <div>
+          {loading && <p>Loading...</p>}
+          {isSearching && (
+            <button
+              onClick={() => {
+                setIsSearching(false);
+                setSearchValue("");
+                setSearchResults([]);
+              }}
+            >
+              Back
+            </button>
+          )}
+          {!error && (
+            <ul>
+              {searchResults.map((result) => (
+                <li key={result.fsq_id}>
+                  <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
+          {error && <p>{error.message}</p>}
+        </div>
       )}
-      {!error && (
-        <ul>
-          {searchResults.map((result) => (
-            <li key={result.fsq_id}>
-              <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      {error && <p>{error.message}</p>}
     </div>
   );
 };
