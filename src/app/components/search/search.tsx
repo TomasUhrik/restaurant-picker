@@ -4,15 +4,16 @@ import { Place4SDetailed } from "@/data-access/fetch-random-place";
 import { useDebounce } from "@/utils/useDebounce";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { Input } from "../input";
+import {
+  Command,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { Muted } from "../muted/muted";
+import { cn } from "@/lib/utils";
 
-export const Search = ({
-  isSearching,
-  setIsSearching,
-}: {
-  isSearching: boolean;
-  setIsSearching: (value: boolean) => void;
-}) => {
+export const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<Place4SDetailed>>(
     []
@@ -47,47 +48,36 @@ export const Search = ({
   }, [debouncedSearchValue, handleFetchPlaces]);
 
   return (
-    <div>
-      <div>
-        <Input
-          type="text"
-          value={searchValue}
-          onFocus={() => {
-            setIsSearching(true);
-          }}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setSearchValue(e.target.value);
-          }}
-          placeholder="Search..."
-        />
-      </div>
+    <Command shouldFilter={false}>
+      <CommandInput
+        placeholder="Type a command or search..."
+        value={searchValue}
+        onValueChange={(value) => {
+          setSearchValue(value);
+        }}
+      />
 
-      {isSearching && (
-        <div>
-          {loading && <p>Loading...</p>}
-          {isSearching && (
-            <button
-              onClick={() => {
-                setIsSearching(false);
-                setSearchValue("");
-                setSearchResults([]);
-              }}
-            >
-              Back
-            </button>
-          )}
-          {!error && (
-            <ul>
-              {searchResults.map((result) => (
-                <li key={result.fsq_id}>
-                  <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
-                </li>
-              ))}
-            </ul>
-          )}
-          {error && <p>{error.message}</p>}
-        </div>
-      )}
-    </div>
+      <CommandList>
+        {loading && (
+          <div className={cn("p-4 text-center")}>
+            <Muted>Loading...</Muted>
+          </div>
+        )}
+
+        {!loading && error && (
+          <div className={cn("p-4 text-center")}>
+            <Muted>Something went wrong, please try again later.</Muted>
+          </div>
+        )}
+
+        {!loading &&
+          !error &&
+          searchResults.map((result) => (
+            <CommandItem key={result.fsq_id}>
+              <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
+            </CommandItem>
+          ))}
+      </CommandList>
+    </Command>
   );
 };

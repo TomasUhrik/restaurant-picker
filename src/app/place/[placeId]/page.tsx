@@ -1,5 +1,5 @@
 import { PopulateMapStore } from "@/app/components/populate-map-store/populate-map-store";
-import { SidebarContent } from "@/app/components/sidebar-content/sidebar-content";
+import { Search } from "@/app/components/search/search";
 import { VenueInfo } from "@/app/components/venue-info/venue-info";
 import { fetchPlace } from "@/data-access/fetch-place";
 import { cn } from "@/lib/utils";
@@ -18,9 +18,8 @@ export default async function Place({
         "md:max-w-lg md:bg-white md:rounded-lg md:pointer-events-auto"
       )}
     >
-      {/* @TODO: Rename */}
-      <div className={cn("pointer-events-auto")}>
-        <SidebarContent />
+      <div className={cn("pointer-events-auto p-2")}>
+        <Search />
       </div>
 
       <div
