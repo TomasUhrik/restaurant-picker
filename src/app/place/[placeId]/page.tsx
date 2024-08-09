@@ -15,7 +15,7 @@ export default async function Place({
     <div
       className={cn(
         "h-screen w-screen relative pointer-events-none",
-        "md:max-w-lg md:bg-gray-100 md:rounded-lg md:pointer-events-auto"
+        "md:max-w-lg md:bg-white md:rounded-lg md:pointer-events-auto"
       )}
     >
       {/* @TODO: Rename */}
