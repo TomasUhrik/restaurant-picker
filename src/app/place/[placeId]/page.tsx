@@ -1,10 +1,8 @@
 import { PopulateMapStore } from "@/app/components/populate-map-store/populate-map-store";
 import { SidebarContent } from "@/app/components/sidebar-content/sidebar-content";
+import { VenueInfo } from "@/app/components/venue-info/venue-info";
 import { fetchPlace } from "@/data-access/fetch-place";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-
-const MOCK_ID = "4b0587b2f964a5203fa022e3";
 
 export default async function Place({
   params,
@@ -21,35 +19,19 @@ export default async function Place({
       )}
     >
       {/* @TODO: Rename */}
-      <div className={cn("bg-red-500 pointer-events-auto")}>
+      <div className={cn("pointer-events-auto")}>
         <SidebarContent />
       </div>
+
       <div
         className={cn(
-          "bg-blue-700 absolute bottom-0 pointer-events-auto",
+          "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl",
           "md:bottom-auto"
         )}
       >
-        <h1>{place.name}</h1>
-        {/* <button onClick={() => revalidateRandomPlace()}>Retry</button> */}
-        <div style={{ display: "flex", overflow: "auto" }}>
-          {place.photos.map((photo) => {
-            return (
-              <img
-                key={photo.id}
-                src={`${photo.prefix}original${photo.suffix}`}
-                alt={place.name}
-                width={photo.width * 0.1}
-                height={photo.height * 0.1}
-              />
-            );
-          })}
-        </div>
-
-        <div style={{ padding: "10px 0" }}>
-          <p>{place.description}</p>
-        </div>
+        <VenueInfo place={place} />
       </div>
+
       <PopulateMapStore
         venueCoords={{
           lat: place.geocodes.main.latitude,
