@@ -15,7 +15,7 @@ export default async function Place({
     <div
       className={cn(
         "h-screen w-screen relative pointer-events-none",
-        "md:max-w-lg md:bg-white md:rounded-lg md:pointer-events-auto"
+        "md:max-w-lg  md:rounded-lg"
       )}
     >
       <div className={cn("pointer-events-auto p-2")}>
@@ -25,7 +25,7 @@ export default async function Place({
       <div
         className={cn(
           "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl",
-          "md:bottom-auto"
+          "md:bottom-auto md:mx-2 md:rounded-md"
         )}
       >
         <VenueInfo place={place} />
