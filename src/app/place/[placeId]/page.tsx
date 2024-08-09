@@ -1,9 +1,8 @@
 import { PopulateMapStore } from "@/app/components/populate-map-store/populate-map-store";
 import { SidebarContent } from "@/app/components/sidebar-content/sidebar-content";
+import { VenueInfo } from "@/app/components/venue-info/venue-info";
 import { fetchPlace } from "@/data-access/fetch-place";
-import Link from "next/link";
-
-const MOCK_ID = "4b0587b2f964a5203fa022e3";
+import { cn } from "@/lib/utils";
 
 export default async function Place({
   params,
@@ -14,35 +13,24 @@ export default async function Place({
 
   return (
     <div
-      style={{
-        backgroundColor: "white",
-        minWidth: "100px",
-        minHeight: "100px",
-        padding: "20px",
-        margin: "20px",
-      }}
+      className={cn(
+        "h-screen w-screen relative pointer-events-none",
+        "md:max-w-lg md:bg-white md:rounded-lg md:pointer-events-auto"
+      )}
     >
-      <SidebarContent>
-        <h1>{place.name}</h1>
-        {/* <button onClick={() => revalidateRandomPlace()}>Retry</button> */}
-        <div style={{ display: "flex" }}>
-          {place.photos.map((photo) => {
-            return (
-              <img
-                key={photo.id}
-                src={`${photo.prefix}original${photo.suffix}`}
-                alt={place.name}
-                width={photo.width * 0.1}
-                height={photo.height * 0.1}
-              />
-            );
-          })}
-        </div>
+      {/* @TODO: Rename */}
+      <div className={cn("pointer-events-auto")}>
+        <SidebarContent />
+      </div>
 
-        <div style={{ padding: "10px 0" }}>
-          <p>{place.description}</p>
-        </div>
-      </SidebarContent>
+      <div
+        className={cn(
+          "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl",
+          "md:bottom-auto"
+        )}
+      >
+        <VenueInfo place={place} />
+      </div>
 
       <PopulateMapStore
         venueCoords={{

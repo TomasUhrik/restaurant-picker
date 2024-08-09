@@ -60,7 +60,5 @@ export async function fetchPlace(fsqId: string) {
       throw err;
     });
 
-  console.log("result:", result);
-
   return result;
 }
