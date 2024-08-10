@@ -3,6 +3,7 @@ import { Search } from "@/app/components/search/search";
 import { VenueInfo } from "@/app/components/venue-info/venue-info";
 import { fetchPlace } from "@/data-access/fetch-place";
 import { cn } from "@/lib/utils";
+import { LinkRandomVenue } from "@/app/components/link-random-venue/link-random-venue";
 
 export default async function Place({
   params,
@@ -15,11 +16,22 @@ export default async function Place({
     <div
       className={cn(
         "h-screen w-screen relative pointer-events-none",
-        "md:max-w-lg  md:rounded-lg"
+        "md:max-w-lg md:rounded-lg"
       )}
     >
       <div className={cn("pointer-events-auto p-2")}>
         <Search />
+      </div>
+
+      <div
+        className={cn(
+          "justify-end flex px-2 pb-2",
+          "md:justify-center md:absolute md:top-0 md:left-0 md:px-4 md:py-4 w-screen"
+        )}
+      >
+        <div className={cn("min-w-0 pointer-events-auto")}>
+          <LinkRandomVenue />
+        </div>
       </div>
 
       <div
