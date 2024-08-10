@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import {
   Command,
+  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
@@ -48,7 +49,7 @@ export const Search = () => {
   }, [debouncedSearchValue, handleFetchPlaces]);
 
   return (
-    <Command shouldFilter={false}>
+    <Command shouldFilter={false} className={cn("relative")}>
       <CommandInput
         placeholder="Type a command or search..."
         value={searchValue}
@@ -57,7 +58,11 @@ export const Search = () => {
         }}
       />
 
-      <CommandList>
+      <CommandList
+        className={cn(
+          "absolute top-full left-0 bg-white w-full rounded-b-md z-30"
+        )}
+      >
         {loading && (
           <div className={cn("p-4 text-center")}>
             <Muted>Loading...</Muted>
@@ -70,13 +75,15 @@ export const Search = () => {
           </div>
         )}
 
-        {!loading &&
-          !error &&
-          searchResults.map((result) => (
-            <CommandItem key={result.fsq_id}>
-              <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
-            </CommandItem>
-          ))}
+        {!loading && !error && searchResults.length > 0 && (
+          <CommandGroup heading="Nearby venues">
+            {searchResults.map((result) => (
+              <CommandItem key={result.fsq_id}>
+                <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
       </CommandList>
     </Command>
   );

@@ -25,11 +25,13 @@ export default async function Place({
 
       <div
         className={cn(
-          "justify-end flex pointer-events-auto px-2 pb-2",
+          "justify-end flex px-2 pb-2",
           "md:justify-center md:absolute md:top-0 md:left-0 md:px-4 md:py-4 w-screen"
         )}
       >
-        <LinkRandomVenue />
+        <div className={cn("min-w-0 pointer-events-auto")}>
+          <LinkRandomVenue />
+        </div>
       </div>
 
       <div
