@@ -4,6 +4,7 @@ import { VenueInfo } from "@/app/components/venue-info/venue-info";
 import { fetchPlace } from "@/data-access/fetch-place";
 import { cn } from "@/lib/utils";
 import { LinkRandomVenue } from "@/app/components/link-random-venue/link-random-venue";
+import { MIN_INFO_HEIGHT } from "@/consts/ui";
 
 export default async function Place({
   params,
@@ -35,6 +36,7 @@ export default async function Place({
       </div>
 
       <div
+        style={{ minHeight: MIN_INFO_HEIGHT }}
         className={cn(
           "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl",
           "md:bottom-auto md:mx-2 md:rounded-md"
