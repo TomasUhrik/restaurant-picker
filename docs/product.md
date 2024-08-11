@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Product requirements were to create an app that helps Cogent employees decide a restaurant to visit for a lunch, 4 features were specifically mentioned in the assignment requirements:
+Product requirements were to create an app that helps CogentLabs employees decide a restaurant to visit for a lunch, 4 features were specifically mentioned in the assignment requirements:
 
 1. Random selection of a restaurant within 1km of the Cogent Labs Office (https://goo.gl/maps/3RNhuTrUnHCypk1K9)
 2. Provide a map view showing the location of the restaurant
@@ -11,15 +11,14 @@ Product requirements were to create an app that helps Cogent employees decide a 
 
 Having a well defined use-case I tried to see the product from the user's perspective and added 2 more requirements:
 
-1. Mobile friendly
+1. Mobile-first
 
-- Many (possibly most) conversations about where to go for lunch happen in a group already on the way out of the office or while waiting for the last members of the group.
+- Many (possibly most) conversations about where to go for lunch happen in a group already on the way out of the office or while waiting at the door for the last members of the group.
 
 2. Speed and performance
 
-- Being mobile oriented comes with the fact that internet connection might not always be ideal
-- User has a clear idea of what they want and showing it to them immediately without unnecessary interaction improves satisfaction
-- As this is a "mock project" for the purposes of a job interview... I just wanted to show of my technical skills
+- Being mobile-first comes with the fact that internet connection might not always be ideal.
+- As this is a "mock project" for the purposes of a job interview, I want to show-off my technical abilities.
 
 ## Outcome
 

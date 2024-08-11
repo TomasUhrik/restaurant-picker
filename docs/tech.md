@@ -25,7 +25,7 @@ Alternatives considered:
 
 ### Tailwind CSS
 
-To speed up UI development I've chosen to leverage Tailwind CSS to create my styles.
+To speed up UI development I've chosen to leverage Tailwind CSS for its great developer experience.
 
 Alternatives considered:
 
@@ -34,7 +34,7 @@ Alternatives considered:
 
 ### ShadCN/ui
 
-To speed up development and ensure accessability I've decided to use an open-source component library. I've ended up using ShadCN for it's sleek look, accessibility through RadixUI and compatibility with Tailwind CSS.
+To speed up development and ensure accessibility of the components I've decided to use an open-source component library. I've ended up using ShadCN for it's minimalistic look, accessibility through RadixUI and compatibility with Tailwind CSS.
 
 Alternatives considered:
 
@@ -43,7 +43,7 @@ Alternatives considered:
 
 ## Global state management
 
-Thanks to the use of react server-side components there is not much need for state-management let alone global state management. The only reason why I've introduced global state at all was to have a way for individual pages to be able to communicate with the `Map` component which lives in the `layout` layer above them so that the `Map` doesn't get remounted on every page change.
+Thanks to the use of react server-side components there is not much need for state-management let alone global state management. The only reason why I've introduced global state at all was to have a way for individual pages to be able to communicate with the `Map` component which lives in the `layout` layer above them so that the `Map` doesn't need to get remounted on every page change.
 
 I've chosen `zustand` for its simplicity.
 
