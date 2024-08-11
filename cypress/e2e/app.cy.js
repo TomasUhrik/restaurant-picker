@@ -1,15 +1,45 @@
-describe("Navigation", () => {
-  it("should navigate to the about page", () => {
-    // Start from the index page
+describe("App", () => {
+  it("Shows random venue on app visit", () => {
+    cy.visit("http://localhost:3000/");
+    cy.url().should("match", /\/place\/[^/]+$/);
+  });
+
+  // It can happen that the random test fails because we randomly get the same venue again -> adding 3 retries
+  it("Randomize venue", { retries: 3 }, () => {
+    cy.visit("http://localhost:3000/");
+    cy.url().should("match", /\/place\/[^/]+$/);
+
+    cy.window().then((win) => {
+      const currentUrl = win.location.href;
+
+      cy.contains("button", "Randomize").click();
+      cy.url().should("not.eq", currentUrl);
+    });
+  });
+
+  // It can happen that the test fails because we randomly get the same venue that we select from search -> adding 3 retries
+  it("Search venue", { retries: 3 }, () => {
     cy.visit("http://localhost:3000/");
 
-    // Find a link with an href attribute containing "about" and click it
-    cy.get('a[href*="about"]').click();
+    cy.get(`input[placeholder="Search by food type or venue name..."]`).type(
+      "ramen"
+    );
 
-    // The new url should include "/about"
-    cy.url().should("include", "/about");
+    cy.window().then((win) => {
+      const currentUrl = win.location.href;
 
-    // The new page should contain an h1 with "About"
-    cy.get("h1").contains("About");
+      cy.get('[data-cy="venue-option"]')
+        .first()
+        .click()
+        .then((element) => {
+          const venueName = element.text();
+
+          // url changed
+          cy.url().should("not.eq", currentUrl);
+
+          // venue info loaded
+          cy.get("h2").contains(venueName);
+        });
+    });
   });
 });

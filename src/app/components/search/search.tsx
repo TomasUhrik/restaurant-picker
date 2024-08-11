@@ -14,6 +14,9 @@ import {
 import { Muted } from "../muted/muted";
 import { cn } from "@/lib/utils";
 
+export const VENUE_SEARCH_INPUT_PLACEHOLDER =
+  "Search by food type or venue name...";
+
 export const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState<Array<Place4SDetailed>>(
@@ -51,7 +54,7 @@ export const Search = () => {
   return (
     <Command shouldFilter={false} className={cn("relative")}>
       <CommandInput
-        placeholder="Type a command or search..."
+        placeholder={VENUE_SEARCH_INPUT_PLACEHOLDER}
         value={searchValue}
         onValueChange={(value) => {
           setSearchValue(value);
@@ -79,7 +82,9 @@ export const Search = () => {
           <CommandGroup heading="Nearby venues">
             {searchResults.map((result) => (
               <CommandItem key={result.fsq_id}>
-                <Link href={`/place/${result.fsq_id}`}>{result.name}</Link>
+                <Link href={`/place/${result.fsq_id}`} data-cy="venue-option">
+                  {result.name}
+                </Link>
               </CommandItem>
             ))}
           </CommandGroup>
