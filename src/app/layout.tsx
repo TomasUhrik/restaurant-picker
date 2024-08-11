@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { BackgroundMapLayout } from "./components/background-map-layout/background-map-layout";
+import { BackgroundMapLayout } from "../components/background-map-layout/background-map-layout";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { LazyMap } from "../../../components/map/map-lazy";
+import { cn } from "@/utils/cn";
+import { LazyMap } from "../map/map-lazy";
 
 export const BackgroundMapLayout = ({
   children,

@@ -11,8 +11,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Muted } from "../muted/muted";
-import { cn } from "@/lib/utils";
+import { Muted } from "../ui/muted";
+import { cn } from "@/utils/cn";
 
 export const VENUE_SEARCH_INPUT_PLACEHOLDER =
   "Search by food type or venue name...";
