@@ -10,7 +10,12 @@ export const LinkRandomVenue = () => {
   const router = useRouter();
 
   const handleOnClick = async () => {
-    const randomPlaceId = await fetchRandomPlaceId();
+    const { status, data: randomPlaceId } = await fetchRandomPlaceId();
+
+    if (status === "error" || !randomPlaceId) {
+      router.push("/error");
+      return;
+    }
 
     router.push(`/place/${randomPlaceId}`);
   };
