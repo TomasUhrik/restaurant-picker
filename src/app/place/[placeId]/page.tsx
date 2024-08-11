@@ -31,8 +31,8 @@ export default async function Place({
 
       <div
         className={cn(
-          "justify-end flex px-2 pb-2",
-          "md:justify-center md:absolute md:top-0 md:left-0 md:px-4 md:py-4 w-screen"
+          "justify-end flex px-2 pb-2 w-screen",
+          "md:justify-center md:absolute md:top-0 md:left-0 md:px-4 md:py-4"
         )}
       >
         <div className={cn("min-w-0 pointer-events-auto")}>
@@ -43,7 +43,7 @@ export default async function Place({
       <div
         style={{ minHeight: MIN_INFO_HEIGHT }}
         className={cn(
-          "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl",
+          "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl shadow-lg",
           "md:bottom-auto md:mx-2 md:rounded-md"
         )}
       >
