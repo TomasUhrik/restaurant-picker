@@ -4,6 +4,7 @@
 
 - _The information we show about venues is insufficient_: Currently it's just a name, photos (if available), description (if available) and location. It would be beneficial for the product to see if we can get more out of 4Square API or if we can integrate with some other APIs as well.
 - _Image lightbox_: We show only small preview of the photos, having the option to see the images in detail could be beneficial for the user.
+- _Improve randomised selection_: The way how we select a random venue is very primitive, at the moment we only randomly select from the same 10 venues.
 - _Deep-link to google/apple maps_: At the moment user can only see direction from CogentLabs office.
 - _Image carousel is not apparent_: Venue images appear in carousel, but without carousel controls the user might not discover there are more images.
 
