@@ -11,3 +11,7 @@ body {
   height: 100%;
   overflow: auto;
 }
+
+.gm-style iframe + div {
+  border: none !important;
+}
