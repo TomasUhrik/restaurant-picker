@@ -1,6 +1,6 @@
 "use server";
 
-const NO_STORE = "no-store";
+import { ServerActionResponse } from "@/types/common";
 
 type Photo4S = {
   id: string;
@@ -28,7 +28,9 @@ export type Place4S = {
   menu?: string;
 };
 
-export async function fetchPlace(fsqId: string) {
+export async function fetchPlace(
+  fsqId: string
+): Promise<ServerActionResponse<Place4S>> {
   const fields = [
     "fsq_id",
     "description",
@@ -43,8 +45,7 @@ export async function fetchPlace(fsqId: string) {
     fields: fields.join(","),
   }).toString();
 
-  // @TODO: Cache?
-  const result: Place4S = await fetch(
+  const result: ServerActionResponse<Place4S> = await fetch(
     `https://api.foursquare.com/v3/places/${fsqId}?` + queryParams,
     {
       method: "GET",
@@ -55,10 +56,14 @@ export async function fetchPlace(fsqId: string) {
     }
   )
     .then((response) => response.json())
-    .catch((err) => {
-      console.error(err);
-      throw err;
-    });
+    .then((data) => ({
+      data,
+      status: "success" as const,
+    }))
+    .catch((error) => ({
+      status: "error" as const,
+      errorMessage: error.message,
+    }));
 
   return result;
 }

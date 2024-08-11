@@ -5,13 +5,18 @@ import { fetchPlace } from "@/data-access/fetch-place";
 import { cn } from "@/lib/utils";
 import { LinkRandomVenue } from "@/app/components/link-random-venue/link-random-venue";
 import { MIN_INFO_HEIGHT } from "@/consts/ui";
+import { redirect } from "next/navigation";
 
 export default async function Place({
   params,
 }: {
   params: { [label: string]: string };
 }) {
-  const place = await fetchPlace(params.placeId);
+  const { data, status } = await fetchPlace(params.placeId);
+
+  if (status === "error" || !data) {
+    return redirect("/error");
+  }
 
   return (
     <div
@@ -42,13 +47,13 @@ export default async function Place({
           "md:bottom-auto md:mx-2 md:rounded-md"
         )}
       >
-        <VenueInfo place={place} />
+        <VenueInfo place={data} />
       </div>
 
       <PopulateMapStore
         venueCoords={{
-          lat: place.geocodes.main.latitude,
-          lng: place.geocodes.main.longitude,
+          lat: data.geocodes.main.latitude,
+          lng: data.geocodes.main.longitude,
         }}
       />
     </div>
