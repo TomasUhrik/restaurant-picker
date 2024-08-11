@@ -16,23 +16,27 @@ export async function GET(request: Request) {
     query: query || "",
   }).toString();
 
-  const result: Array<Place4SDetailed> = await fetch(
-    "https://api.foursquare.com/v3/places/search?" + queryParams,
-    {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: process.env.FOUR_SQUARE_API_KEY || "",
-      },
-      cache: NO_STORE,
-    }
-  )
-    .then((response) => response.json())
-    .then((data) => data.results)
-    .catch((err) => {
-      console.error(err);
-      throw err;
-    });
+  try {
+    const result: Array<Place4SDetailed> = await fetch(
+      "https://api.foursquare.com/v3/places/search?" + queryParams,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization: process.env.FOUR_SQUARE_API_KEY || "",
+        },
+        cache: NO_STORE,
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data.results)
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
 
-  return Response.json({ data: result });
+    return Response.json({ data: result });
+  } catch (error) {
+    return new Response("Failed to fetch places", { status: 500 });
+  }
 }
