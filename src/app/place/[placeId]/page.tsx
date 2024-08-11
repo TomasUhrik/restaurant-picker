@@ -21,7 +21,7 @@ export default async function Place({
   return (
     <div
       className={cn(
-        "h-screen w-screen relative pointer-events-none",
+        "h-svh w-svw relative pointer-events-none",
         "md:max-w-lg md:rounded-lg"
       )}
     >
