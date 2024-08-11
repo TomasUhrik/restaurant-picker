@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils";
-import { H2 } from "../h2/h2";
+import { cn } from "@/utils/cn";
+import { H2 } from "../ui/h2";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { P } from "../p/p";
+import { P } from "../ui/p";
 import { Place4S } from "@/data-access/fetch-place";
 
 export const VenueInfo = ({ place }: { place: Place4S }) => {

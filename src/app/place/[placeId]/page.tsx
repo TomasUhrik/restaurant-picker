@@ -1,11 +1,11 @@
-import { PopulateMapStore } from "@/app/components/populate-map-store/populate-map-store";
-import { Search } from "@/app/components/search/search";
-import { VenueInfo } from "@/app/components/venue-info/venue-info";
+import { PopulateMapStore } from "@/components/populate-map-store/populate-map-store";
+import { Search } from "@/components/search/search";
+import { VenueInfo } from "@/components/venue-info/venue-info";
 import { fetchPlace } from "@/data-access/fetch-place";
-import { cn } from "@/lib/utils";
-import { LinkRandomVenue } from "@/app/components/link-random-venue/link-random-venue";
+import { LinkRandomVenue } from "@/components/link-random-venue/link-random-venue";
 import { MIN_INFO_HEIGHT } from "@/consts/ui";
 import { redirect } from "next/navigation";
+import { cn } from "@/utils/cn";
 
 export default async function Place({
   params,

@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { fetchRandomPlaceId } from "@/data-access/fetch-random-place";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { Dice6Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
