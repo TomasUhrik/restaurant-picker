@@ -43,8 +43,8 @@ export default async function Place({
       <div
         style={{ minHeight: MIN_INFO_HEIGHT }}
         className={cn(
-          "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl shadow-lg",
-          "md:bottom-auto md:mx-2 md:rounded-md"
+          "bg-white absolute bottom-0 pointer-events-auto py-4 px-2 rounded-t-xl shadow-lg w-full",
+          "md:bottom-auto md:mx-2 md:rounded-md md:w-[496px]"
         )}
       >
         <VenueInfo place={data} />
