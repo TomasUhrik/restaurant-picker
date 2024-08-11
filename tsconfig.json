@@ -28,5 +28,5 @@
     ".next/types/**/*.ts",
     "cypress/e2e/app.cy.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./cypress.config.ts"]
 }
