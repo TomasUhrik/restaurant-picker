@@ -81,7 +81,11 @@ export const Search = () => {
         {!loading && !error && searchResults.length > 0 && (
           <CommandGroup heading="Nearby venues">
             {searchResults.map((result) => (
-              <CommandItem key={result.fsq_id}>
+              <CommandItem
+                key={result.fsq_id}
+                asChild
+                className={cn("cursor-pointer")}
+              >
                 <Link href={`/place/${result.fsq_id}`} data-cy="venue-option">
                   {result.name}
                 </Link>
