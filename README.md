@@ -1,10 +1,14 @@
 # Cogent Restaurant picker
 
-An app to help you choose a great venue for today's lunch.
+A mobile-first web app to help you choose a great venue for today's lunch.
 
 Available for preview at [restairant-picker-bice.vercel.app](https://restaurant-picker-bice.vercel.app)
 
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/80545b6e26ce4ffeb8e6ccd0646bd4a7?sid=702354e7-1f8f-4c08-99cd-0efd2726cdfa" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
 [Current state of development + next steps](./docs/development.md)
+
+Demo showing the performance with poor internet connection available on [Loom](https://www.loom.com/share/cf6222ca36a846de89bab1ffe093200d?sid=f73011bd-cbfe-4de3-9ae6-4e28367665da)
 
 ## Features
 
@@ -27,10 +31,6 @@ Read more about the features of this app in ["Product reasoning"](./docs/product
 - Infra: Github actions + Vercel
 
 Read more about the reasoning for the selection of these technologies in ["Tech reasoning"](./docs/tech.md)
-
-## Notes regarding the assignment
-
-My thoughts about the current state of this project + possible next steps in development "here"
 
 ## How to use
 
@@ -58,7 +58,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 #### Unit + integrations tests
 
-- run automatically during commits
+- runs automatically during commits
 - manual run
   `yarn run test`
 
