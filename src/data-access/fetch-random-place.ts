@@ -1,7 +1,7 @@
 "use server";
 
-import { RANDOM_PLACE_TAG } from "@/consts/cache-tags";
 import { COGENT_LABS_LL } from "@/consts/map";
+import { ServerActionResponse } from "@/types/common";
 
 const NO_STORE = "no-store";
 
@@ -26,7 +26,9 @@ export type Place4SDetailed = {
   photos: Array<Photo4S>;
 };
 
-export const fetchRandomPlaceId = async (): Promise<string> => {
+export const fetchRandomPlaceId = async (): Promise<
+  ServerActionResponse<string>
+> => {
   const fields = ["fsq_id"];
 
   const queryParams = new URLSearchParams({
@@ -45,9 +47,6 @@ export const fetchRandomPlaceId = async (): Promise<string> => {
           Authorization: process.env.FOUR_SQUARE_API_KEY || "",
         },
         cache: NO_STORE,
-        next: {
-          tags: [RANDOM_PLACE_TAG],
-        },
       }
     )
       .then((response) => response.json())
@@ -60,8 +59,8 @@ export const fetchRandomPlaceId = async (): Promise<string> => {
     const randomIndex = Math.floor(Math.random() * result.length);
     const selected = result && result[randomIndex];
 
-    return selected.fsq_id;
+    return { status: "success", data: selected.fsq_id };
   } catch (error) {
-    throw error;
+    return { status: "error", errorMessage: "Unspecified" };
   }
 };
